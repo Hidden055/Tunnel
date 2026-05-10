@@ -1,0 +1,21 @@
+name: "GOST Tunnel Relay"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install GOST
+        run: |
+          wget https://github.com/ginuerzh/gost/releases/download/v2.11.5/gost-linux-amd64-2.11.5.gz
+          gunzip gost-linux-amd64-2.11.5.gz
+          chmod +x gost-linux-amd64-2.11.5
+          sudo mv gost-linux-amd64-2.11.5 /usr/local/bin/gost
+
+      - name: Run GOST relay server on port 9000
+        run: |
+          nohup gost -L=relay://:9000 &
+          sleep 2
+          echo "GOST relay server started on port 9000"
