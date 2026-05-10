@@ -1,0 +1,28 @@
+name: "GitHub to Iran Tunnel"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install GOST
+        run: |
+          wget https://github.com/ginuerzh/gost/releases/download/v2.11.5/gost-linux-amd64-2.11.5.gz
+          gunzip gost-linux-amd64-2.11.5.gz
+          chmod +x gost-linux-amd64-2.11.5
+          sudo mv gost-linux-amd64-2.11.5 /usr/local/bin/gost
+
+      - name: Get GitHub Runner IP
+        run: |
+          echo "GITHUB_RUNNER_IP=$(curl -s https://api.ipify.org)" >> $GITHUB_ENV
+          echo "Runner IP: ${{ env.GITHUB_RUNNER_IP }}"
+
+      - name: Start GOST relay
+        run: |
+          nohup gost -L=relay://:9000 &
+          echo "GOST relay running on port 9000"
+          echo "Runner IP: ${{ env.GITHUB_RUNNER_IP }}"
+          echo "Connect from Iran using: gost -L=:1080 -F=relay://${{ env.GITHUB_RUNNER_IP }}:9000"
+          sleep 3600
