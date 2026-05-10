@@ -10,61 +10,57 @@ jobs:
       - name: Install ssh client
         run: sudo apt-get update && sudo apt-get install -y ssh
 
-      - name: Add server to known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -p 443 -H 95.38.179.216 >> ~/.ssh/known_hosts
-
       - name: Create reverse tunnel
         run: |
-          echo '-----BEGIN OPENSSH PRIVATE KEY-----' > ~/.ssh/id_rsa_github
-          echo 'b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn' >> ~/.ssh/id_rsa_github
-          echo 'NhAAAAAwEAAQAAAgEAyeITMfYA8NVRBMUIJT/f+kiCwd8aPW3ifnajZfKu9IDX0WNuB4cv' >> ~/.ssh/id_rsa_github
-          echo '1FgNwNK1qTk877Oadp6B4j0KrhJQW3s2aCThVRGhrsQD9SH232SrndIDnq2D0upYh4fu29' >> ~/.ssh/id_rsa_github
-          echo 'EFJ15ipH0ODYOkQy42Divl4OtX4TYJzWq1kdp3EQ08ljQVgecmDkrvh632CjLEeZ6QVtL8' >> ~/.ssh/id_rsa_github
-          echo 'PNwyyfWrgPQowV/uqiX49VSzYM0lF4fm16UYJwMOeSYUO406wDKV6+AL8dheGx33mnYejN' >> ~/.ssh/id_rsa_github
-          echo 'X9qHf7sSYjpzpfMTxIDgG+RUq8UQWd8n5U1AjMiXChH+pvmGBzA8qUV2Q/raQChX79q3Dp' >> ~/.ssh/id_rsa_github
-          echo '5WUjxuNrHHBuGCCl1cocF/qLXoaU89R/1rrsZMY9MuWUByubTcD+HcqJZbBUv6higRLiB5' >> ~/.ssh/id_rsa_github
-          echo 'j83a0vaUpFbPRdh9E3XOq4HwGgB9sJ3+T/KmAYPcXEmXqSrZKA/uyWBFBOoVbp+6re8dUN' >> ~/.ssh/id_rsa_github
-          echo 'RqPT5lS23+YWg77UTIbX6YYlf/dxFPXyu4r8PtIm5EdErOabgDgCpa3YQLsI9eoaQg3gOj' >> ~/.ssh/id_rsa_github
-          echo 'C7KsC5EqDRqz7H/knGrusIT8KfHdqeXminNy9+twpGkx3dZzrU2OYhPBfD2bOmPy1JYGc0' >> ~/.ssh/id_rsa_github
-          echo 'Am0fF3zQWejTXTqozF563AJXOV8VVXATPBciOptZiMZ/OCnyzrfUlLWpPmkNhJMf13FFWW' >> ~/.ssh/id_rsa_github
-          echo 'cAAAdY9/u9bff7vW0AAAAHc3NoLXJzYQAAAgEAyeITMfYA8NVRBMUIJT/f+kiCwd8aPW3i' >> ~/.ssh/id_rsa_github
-          echo 'fnajZfKu9IDX0WNuB4cv1FgNwNK1qTk877Oadp6B4j0KrhJQW3s2aCThVRGhrsQD9SH232' >> ~/.ssh/id_rsa_github
-          echo 'SrndIDnq2D0upYh4fu29EFJ15ipH0ODYOkQy42Divl4OtX4TYJzWq1kdp3EQ08ljQVgecm' >> ~/.ssh/id_rsa_github
-          echo 'Dkrvh632CjLEeZ6QVtL8PNwyyfWrgPQowV/uqiX49VSzYM0lF4fm16UYJwMOeSYUO406wD' >> ~/.ssh/id_rsa_github
-          echo 'KV6+AL8dheGx33mnYejNX9qHf7sSYjpzpfMTxIDgG+RUq8UQWd8n5U1AjMiXChH+pvmGBz' >> ~/.ssh/id_rsa_github
-          echo 'A8qUV2Q/raQChX79q3Dp5WUjxuNrHHBuGCCl1cocF/qLXoaU89R/1rrsZMY9MuWUByubTc' >> ~/.ssh/id_rsa_github
-          echo 'D+HcqJZbBUv6higRLiB5j83a0vaUpFbPRdh9E3XOq4HwGgB9sJ3+T/KmAYPcXEmXqSrZKA' >> ~/.ssh/id_rsa_github
-          echo '/uyWBFBOoVbp+6re8dUNRqPT5lS23+YWg77UTIbX6YYlf/dxFPXyu4r8PtIm5EdErOabgD' >> ~/.ssh/id_rsa_github
-          echo 'gCpa3YQLsI9eoaQg3gOjC7KsC5EqDRqz7H/knGrusIT8KfHdqeXminNy9+twpGkx3dZzrU' >> ~/.ssh/id_rsa_github
-          echo '2OYhPBfD2bOmPy1JYGc0Am0fF3zQWejTXTqozF563AJXOV8VVXATPBciOptZiMZ/OCnyzr' >> ~/.ssh/id_rsa_github
-          echo 'fUlLWpPmkNhJMf13FFWWcAAAADAQABAAACABOyqdHNoYDeJ3YSLX3I8jcu/QcimCJXRuq0' >> ~/.ssh/id_rsa_github
-          echo '87N+TuDPc39cNr+oSpvq7YibZps42P/AY/lf9OdYsmKSqeGLL59QveW5fy+Ys5Qm+LoKTg' >> ~/.ssh/id_rsa_github
-          echo '5rj+vbHUomkHXE5yLujZSuSmynQQhDiHL/nsmaMedUvzHbvnAbEdVF3ik9Q+SZ92FB5v4t' >> ~/.ssh/id_rsa_github
-          echo 'BJsV97Q+CNqfBJFcK71adOAsxsuhxxo7HIPgiZ6SYaA30/8sRPNUiftAepiKhR3cZVecd/' >> ~/.ssh/id_rsa_github
-          echo 'FYXoH97QyzS1X4YXm3ZXUbI+VAhekKsoAQ1Cz9sY18QcycAjHHbspzg1WDtkzxaGsTOhWs' >> ~/.ssh/id_rsa_github
-          echo 'HfY681Wjc5WH8wNX1JKL4EZHKUukMMy8QtUaGLB9xP02Fj8/RriuEMdbT2yMizP+kHqXJC' >> ~/.ssh/id_rsa_github
-          echo 'BslzCdwZk5cWhzMrghKu0jb6EIrT9vXoPBcZuYsyionzSjiRM0BIXkfewqFwfGoaacywod' >> ~/.ssh/id_rsa_github
-          echo 'wP6WqKQfvi025fDgZsEK7fcGbC0hkXl+daWm6xmJ/CxNa6eWglXoPOrfDxXJmPAP3ukTkj' >> ~/.ssh/id_rsa_github
-          echo '/Z8m6C10dY+/Fb3igIf16Wx+OsUNP8bixXAHeQK0rGjVnsz6jyp2YtufvygtcVmsIBK4a3' >> ~/.ssh/id_rsa_github
-          echo 'sUIZq8L7Q5ZeHFMbwYm34N+R8uApstpMkPeu55NcvSNPCAyj9jBvOVKvY855K/HCX5inzw' >> ~/.ssh/id_rsa_github
-          echo 'lVdbBpN5q9WRAm8zNtAAABAG1NB+3mFhiCBxJMf9vO5L8ordHd3xup7ORbRZFMKIJDJU1u' >> ~/.ssh/id_rsa_github
-          echo 'yQHDakWE1YxwaIS1yvcFyZgEg8bBEmzTmt15+WxtDALSC/Tvy+GZ4oVwnPjgulte9qC96L' >> ~/.ssh/id_rsa_github
-          echo 'VxMbf5qkG1PBmR9P3Ipk8DiOTyb7P1r9wludNPS6RRcTZ/jf+96xgbcqP2UkuJDjU+xOdm' >> ~/.ssh/id_rsa_github
-          echo 'hHzaYniu9KsbspGVuDBrRqLrpyjjOQ4z5Pv8VklY5fj6LFM4z87lMkZJnXZcflE86eaef4' >> ~/.ssh/id_rsa_github
-          echo '3vcVONI7+kGO8EL4/zHqsIiC/6iCpanDVml8jTRp9bAcr89uokg9c+Fn0j6YCNzAJAQWxU' >> ~/.ssh/id_rsa_github
-          echo 'eBTGaKcW8b0+BSoAAAEBAOoOMKoNsV8hPj5UhB3OECbsHVTVWEP/TuH36f5AP6RZaFvh/O' >> ~/.ssh/id_rsa_github
-          echo 'kDd7+0V6aT5uCYTEeBrwfZgVtcJvEA+xKFWGaxeBM6HUxBqBuyfw5AYnazPUSmu9ga7RTK' >> ~/.ssh/id_rsa_github
-          echo 'yBuE/bySelKwBFK+H2KmP9zKme34BYCvu/XW5dcPstSUH/h2GDywoMOrkdAd7w6F/DNYyS' >> ~/.ssh/id_rsa_github
-          echo 'H0k4HNabLEUn7MRMg8rZBoTjmY+reLFz1M8PXTM8Lm2wyi8HGS1TyUIo02l4DesbPtjnyv' >> ~/.ssh/id_rsa_github
-          echo 'vS8qV7nz9TRxy+/g5UElqVsil8Xn18SFV3fvNsm15Tiq/uQvnyH/ZLJS8z7BuXvs2ZU9jX' >> ~/.ssh/id_rsa_github
-          echo 'GsEzyipYkwgJMAAAEBANzPruRn7SIbCOCbOF3zA5CDaXVnpCfQFPo7TytgA2C7tLPy7QjO' >> ~/.ssh/id_rsa_github
-          echo 'IQOJwTqyHuIbQLF+Olt4yXGS0YOoiegaD2qixB2oIvSrk7i5jP5em6KXllGrdycsJjL/n6' >> ~/.ssh/id_rsa_github
-          echo 'Wsfr0R9y9tg+ff1SRrj6cHIbn+wzppam6/7Y3vr24jevD+AmTIKQYkKK/sZ4bqCgN7/GGU' >> ~/.ssh/id_rsa_github
-          echo 'kSg2pwBFNFrSfY4OKXHV0xJEveeDiB6svW1zFDjsByPf5ErQ5FNropH6o5yD1uDaWYQvNW' >> ~/.ssh/id_rsa_github
-          echo 'Xa3EXjDTv7EA8+qJ8259uoKfxW7zOuSS1Th9TLAQAbQc5zdjGH3Z5+viuSpUgWhoWG0du8' >> ~/.ssh/id_rsa_github
-          echo 'e5GMNTV5TF0AAAAfcm9vdEB1YnVudHUtLS0xLXZjcHUtLS0xLWdiLXJhbQECAwQ=' >> ~/.ssh/id_rsa_github
-          echo '-----END OPENSSH PRIVATE KEY-----' >> ~/.ssh/id_rsa_github
+          mkdir -p ~/.ssh
+          echo '-----BEGIN OPENSSH PRIVATE KEY-----
+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
+-----END OPENSSH PRIVATE KEY-----' > ~/.ssh/id_rsa_github
           chmod 600 ~/.ssh/id_rsa_github
-          ssh -o StrictHostKeyChecking=accept-new -p 443 -i ~/.ssh/id_rsa_github -R 9999:localhost:22 root@95.38.179.216 -N
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_github -R 9999:localhost:443 root@95.38.179.216 -N
