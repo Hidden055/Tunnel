@@ -1,0 +1,22 @@
+name: SSH Tunnel to Iran
+
+on:
+  workflow_dispatch:
+
+jobs:
+  tunnel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y ssh
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 443 -H 95.38.179.216 >> ~/.ssh/known_hosts
+
+      - name: Create reverse tunnel
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY_IRAN }}" > ~/.ssh/id_rsa_github
+          chmod 600 ~/.ssh/id_rsa_github
+          ssh -o StrictHostKeyChecking=accept-new -p 443 -i ~/.ssh/id_rsa_github -R 9999:localhost:22 root@95.38.179.216 -N
