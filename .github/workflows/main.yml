@@ -1,0 +1,32 @@
+name: "GOST Tunnel Relay"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install GOST
+        run: |
+          wget https://github.com/ginuerzh/gost/releases/download/v2.11.5/gost-linux-amd64-2.11.5.gz
+          gunzip gost-linux-amd64-2.11.5.gz
+          chmod +x gost-linux-amd64-2.11.5
+          sudo mv gost-linux-amd64-2.11.5 /usr/local/bin/gost
+
+      - name: Start GOST relay on port 9000
+        run: |
+          nohup gost -L=relay://:9000 &
+          sleep 2
+          echo "GOST relay started on port 9000"
+
+      - name: Generate SSH key
+        run: |
+          ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+          cat ~/.ssh/id_rsa.pub
+
+      - name: Start localhost.run tunnel with key
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -R 80:localhost:9000 localhost.run 2>&1 | tee tunnel.log &
+          sleep 15
+          cat tunnel.log | grep -o "http[s]*://[a-zA-Z0-9.-]*\.localhost\.run" | head -1
